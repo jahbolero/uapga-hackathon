@@ -1,0 +1,277 @@
+<html>
+    <head>
+        <style>
+            .up {
+                position:absolute;
+                bottom: 100px;
+                right: 100px;
+                z-index: 1500;
+            }
+            .down {
+                position:absolute;
+                bottom: 25px;
+                right: 100px;
+                z-index: 1500;
+            }
+            .background{
+                position:absolute;
+                
+                z-index: 1;
+                
+                
+            }
+            .drawing-canvas{
+                position:absolute;
+                z-index: 1000;
+            }
+        </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/style.css">
+    </head>
+    <body onload="loadCanvasStart()" style="overflow: hidden;">
+        <div class="wrapper d-flex align-items-stretch">
+
+            <nav id="sidebar" style="z-index: 10000; height: 1000px;">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary" >
+	          <i class="fa fa-bars"></i>
+	          <span class="sr-only">Toggle Menu</span>
+	        </button>
+        </div>
+				<div class="p-4 pt-5">
+		  		<h1><a href="index.html" class="logo">Orama</a></h1>
+	        <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Select a Date</a>
+	            <ul class="collapse list-unstyled" id="homeSubmenu">
+                <li>
+                    <a href="#">Home 1</a>
+                </li>
+                <li>
+                    <a href="#">Home 2</a>
+                </li>
+                <li>
+                    <a href="#">Home 3</a>
+                </li>
+	            </ul>
+	          </li>
+	          <li>
+	              <a href="#" onclick="activateCanvas()">Brush Tool</a>
+	          </li>
+	          <li>
+              <!-- <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+              <ul class="collapse list-unstyled" id="pageSubmenu">
+                <li>
+                    <a href="#">Page 1</a>
+                </li>
+                <li>
+                    <a href="#">Page 2</a>
+                </li>
+                <li>
+                    <a href="#">Page 3</a>
+                </li>
+              </ul>
+	          </li>
+	          <li>
+              <a href="#">Portfolio</a>
+	          </li>
+	          <li>
+              <a href="#">Contact</a>
+	          </li> -->
+	        </ul>
+
+	        <div class="mb-5">
+						<h3 class="h6">Subscribe for newsletter</h3>
+						<form action="#" class="colorlib-subscribe-form">
+	            <div class="form-group d-flex">
+	            	<div class="icon"><span class="icon-paper-plane"></span></div>
+	              <input type="text" class="form-control" placeholder="Enter Email Address">
+	            </div>
+	          </form>
+					</div>
+
+	        <div class="footer">
+	        	<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
+						  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+	        </div>
+
+	      </div>
+    	</nav>
+
+
+
+            <div class="drawing-canvas" id="drawing-canvas-id">
+                <canvas id="can" width="1600" height="750" style="position:absolute;top:10%;left:10%;"></canvas>
+
+            </div>
+            <div class="arrows">
+                <img class="up" src="C:\Users\Acer\Documents\archi\up.png" onclick="move('UP')" width="100" height="50"/>
+                <img class="down" src="C:\Users\Acer\Documents\archi\down.png" onclick="move('DOWN')" width="100" height="50"/>
+            </div>
+            <div class="img-box">
+                <iframe id="360-box" class="background" width="100%" height="100%" src=""></iframe>
+            </div>
+        </div>
+
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
+
+<script>
+    var imageArray = ["https://momento360.com/e/u/61222faf029e48638cbae0eeb90ad8dc?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium",
+                      "https://momento360.com/e/u/0608d35ca078418391af013abf091903?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium",
+                      "https://momento360.com/e/u/ce79b9c3ab78405692f5cb4877529014?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium",
+                      "https://momento360.com/e/u/3cee8ed8d21341e3ac17db0d7a3ee7ee?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium",
+                      "https://momento360.com/e/u/dda8274027224509a472d0cd16f6b8ff?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium",
+                      "https://momento360.com/e/u/52df17c5ceb74370a138ba74c4cf3895?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium",
+                      "https://momento360.com/e/u/c244abe35d554ec08cd0f1c0c8830276?utm_campaign=embed&utm_source=other&heading=-5.68&pitch=-36.43&field-of-view=100&size=medium"
+                      ]
+    var count = 0;
+    function move(direction){
+        count = direction === "UP"? count+1:count-1;
+        document.getElementById("360-box").src = imageArray[count];
+        loadCanvasStart();
+        erase();
+
+    }
+</script>
+
+<script type="text/javascript">
+    var canvas, ctx, flag = false,
+        prevX = 0,
+        currX = 0,
+        prevY = 0,
+        currY = 0,
+        dot_flag = false;
+
+    var x = "red",
+        y = 2;
+    
+    function init() {
+        canvas = document.getElementById('can');
+        ctx = canvas.getContext("2d");
+        w = canvas.width;
+        h = canvas.height;
+        color("red");
+    
+        canvas.addEventListener("mousemove", function (e) {
+            findxy('move', e)
+        }, false);
+        canvas.addEventListener("mousedown", function (e) {
+            findxy('down', e)
+        }, false);
+        canvas.addEventListener("mouseup", function (e) {
+            findxy('up', e)
+        }, false);
+        canvas.addEventListener("mouseout", function (e) {
+            findxy('out', e)
+        }, false);
+    }
+    function color(obj) {
+        switch (obj.id) {
+            case "green":
+                x = "green";
+                break;
+            case "blue":
+                x = "blue";
+                break;
+            case "red":
+                x = "red";
+                break;
+            case "yellow":
+                x = "yellow";
+                break;
+            case "orange":
+                x = "orange";
+                break;
+            case "black":
+                x = "black";
+                break;
+            case "white":
+                x = "white";
+                break;
+        }
+        if (x == "white") y = 14;
+        else y = 2;
+    
+    }
+    
+    function draw() {
+        ctx.beginPath();
+        ctx.moveTo(prevX, prevY);
+        ctx.lineTo(currX, currY);
+        ctx.strokeStyle = x;
+        ctx.lineWidth = y;
+        ctx.stroke();
+        ctx.closePath();
+    }
+    
+    function erase() {
+            ctx.clearRect(0, 0, w, h);
+            document.getElementById("canvasimg").style.display = "none";
+    }
+    
+    function save() {
+        document.getElementById("canvasimg").style.border = "2px solid";
+        var dataURL = canvas.toDataURL();
+        document.getElementById("canvasimg").src = dataURL;
+        document.getElementById("canvasimg").style.display = "inline";
+    }
+
+    
+    function findxy(res, e) {
+        if (res == 'down') {
+            prevX = currX;
+            prevY = currY;
+            currX = e.clientX - canvas.offsetLeft;
+            currY = e.clientY - canvas.offsetTop;
+    
+            flag = true;
+            dot_flag = true;
+            if (dot_flag) {
+                ctx.beginPath();
+                ctx.fillStyle = x;
+                ctx.fillRect(currX, currY, 2, 2);
+                ctx.closePath();
+                dot_flag = false;
+            }
+        }
+        if (res == 'up' || res == "out") {
+            flag = false;
+        }
+        if (res == 'move') {
+            if (flag) {
+                prevX = currX;
+                prevY = currY;
+                currX = e.clientX - canvas.offsetLeft;
+                currY = e.clientY - canvas.offsetTop;
+                draw();
+            }
+        }
+    }
+
+    function activateCanvas(){
+        var status = document.getElementById("drawing-canvas-id").style.visibility;
+        if(status === "hidden"){
+            init();
+            wasClicked = true;
+            document.getElementById("drawing-canvas-id").style.visibility = "visible"
+        }else{
+            wasClicked = false;
+            document.getElementById("drawing-canvas-id").style.visibility = "hidden"
+        }
+    }
+    function loadCanvasStart(){
+        document.getElementById("drawing-canvas-id").style.visibility = "hidden"
+    }
+    </script>
