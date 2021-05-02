@@ -4,7 +4,7 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-:root {
+ :root {
   --blue: #007bff;
   --indigo: #6610f2;
   --purple: #6f42c1;
@@ -8207,6 +8207,7 @@ h1, h2, h3, h4, h5,
   width: 100%; }
 
 #sidebar {
+  margin-left: -250px;
   min-width: 250px;
   max-width: 250px;
   background: #1e272e;
@@ -8218,9 +8219,9 @@ h1, h2, h3, h4, h5,
   #sidebar .h6 {
     color: #fff; }
   #sidebar.active {
-    margin-left: -250px; }
+    margin-left: 0px; }
     #sidebar.active .custom-menu {
-      margin-right: -50px; }
+      margin-right: -25px; }
   #sidebar h1 {
     margin-bottom: 20px;
     font-weight: 700; }
@@ -8257,7 +8258,7 @@ h1, h2, h3, h4, h5,
     position: absolute;
     top: 20px;
     right: 0;
-    margin-right: -20px;
+    margin-right: -50px;
     -webkit-transition: 0.3s;
     -o-transition: 0.3s;
     transition: 0.3s; }

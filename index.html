@@ -15,7 +15,7 @@
             }
             .background{
                 position:absolute;
-                
+
                 z-index: 1;
                 
                 
@@ -24,109 +24,123 @@
                 position:absolute;
                 z-index: 1000;
             }
-        </style>
+
+            .event-log {
+      font-family: consolas, Monaco, monospace;
+      margin: 10px 5px;
+      line-height: 2;
+      border: 1px solid #4c4c4c;
+      height: auto;
+      width: 90%;
+      padding: 2px 6px;
+      color: #4c4c4c;
+      white-space: pre;
+    }
+            
+    </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-		
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="dist/simplepicker.css">
     </head>
-    <body onload="loadCanvasStart()" style="overflow: hidden;">
-        <div class="wrapper d-flex align-items-stretch">
 
+    <body onload="loadCanvasStart()" style="overflow: hidden;">
+        
+        <div class="wrapper d-flex align-items-stretch">
+            <video id="video-logo" width="100%" height="100%" playsinline autoplay muted style="position: absolute; z-index: -10px; outline: none;  background-color: #1e272e !important;">
+                <source src="logovid2.mp4" type="video/mp4">
+            </video>
             <nav id="sidebar" style="z-index: 10000; height: 1000px;">
 				<div class="custom-menu">
-					<button type="button" id="sidebarCollapse" class="btn btn-primary" >
-	          <i class="fa fa-bars"></i>
-	          <span class="sr-only">Toggle Menu</span>
-	        </button>
-        </div>
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+                    <i class="fa fa-bars"></i>
+                    <span class="sr-only">Toggle Menu</span>
+                    </button>
+                </div>
 				<div class="p-4 pt-5">
-		  		<h1><a href="index.html" class="logo">Orama</a></h1>
+		  		<!-- <a href="index.html" class="logo">Orama</a> -->
+                  <h1> <img class="logo" src="images/ORAMA.png" width="220" height="100" style="margin-left: -20px;"/></h1>
 	        <ul class="list-unstyled components mb-5">
-	          <li class="active">
-	            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Select a Date</a>
+
+	          <li>
+	              <a href="#" onclick="activateCanvas()">Brush Tool</a>
+	          </li>
+              <!-- <li>
+                <a href="#" onclick="activateCanvas()">Advance Mode</a>
+              </li> -->
+              <li class="active">
+	            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Advanced Modes</a>
 	            <ul class="collapse list-unstyled" id="homeSubmenu">
                 <li>
-                    <a href="#">Home 1</a>
+                    <a href="#" onclick="activateAi()">AI</a>
                 </li>
                 <li>
-                    <a href="#">Home 2</a>
-                </li>
-                <li>
-                    <a href="#">Home 3</a>
+                    <a href="#" onclick="activateLidar()">Lidar</a>
                 </li>
 	            </ul>
 	          </li>
 	          <li>
-	              <a href="#" onclick="activateCanvas()">Brush Tool</a>
-	          </li>
-	          <li>
-              <!-- <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-              <ul class="collapse list-unstyled" id="pageSubmenu">
-                <li>
-                    <a href="#">Page 1</a>
-                </li>
-                <li>
-                    <a href="#">Page 2</a>
-                </li>
-                <li>
-                    <a href="#">Page 3</a>
-                </li>
-              </ul>
-	          </li>
-	          <li>
-              <a href="#">Portfolio</a>
-	          </li>
-	          <li>
-              <a href="#">Contact</a>
-	          </li> -->
-	        </ul>
+                <a href="#" id="simplepicker-btn" onclick="datePick()" >Select Date</a>
+                <input type="text" id="event-log" class="event-log" style="visibility: hidden;">
+              </li>
+              
+            </ul>
+            </nav>
 
-	        <div class="mb-5">
-						<h3 class="h6">Subscribe for newsletter</h3>
-						<form action="#" class="colorlib-subscribe-form">
-	            <div class="form-group d-flex">
-	            	<div class="icon"><span class="icon-paper-plane"></span></div>
-	              <input type="text" class="form-control" placeholder="Enter Email Address">
-	            </div>
-	          </form>
-					</div>
+            
+            <div class="drawing-canvas" id="drawing-canvas-id" style="position: absolute;">
+                <canvas id="can" width="1700" height="1000" style="position:absolute;top:10%;left:10%;"></canvas>
+            </div>  
 
-	        <div class="footer">
-	        	<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
-						  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-	        </div>
-
-	      </div>
-    	</nav>
-
-
-
-            <div class="drawing-canvas" id="drawing-canvas-id">
-                <canvas id="can" width="1600" height="750" style="position:absolute;top:10%;left:10%;"></canvas>
-
-            </div>
             <div class="arrows">
-                <img class="up" src="C:\Users\Acer\Documents\archi\up.png" onclick="move('UP')" width="100" height="50"/>
-                <img class="down" src="C:\Users\Acer\Documents\archi\down.png" onclick="move('DOWN')" width="100" height="50"/>
+                <img id="up" class="up" style="display: none;" src="C:\Users\Acer\Documents\archi\up.png" onclick="move('UP')" width="100" height="50"/>
+                <img id="down" class="down" style="display: none;" src="C:\Users\Acer\Documents\archi\down.png" onclick="move('DOWN')" width="100" height="50"/>
             </div>
             <div class="img-box">
                 <iframe id="360-box" class="background" width="100%" height="100%" src=""></iframe>
             </div>
+                    
+
         </div>
 
 
-        <script src="js/jquery.min.js"></script>
-        <script src="js/popper.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/main.js"></script>
+
+
     </body>
 </html>
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+<script src="dist/simplepicker.js"></script>
+<script>
 
+  let simplepicker = new SimplePicker({
+    zIndex: 1000
+  });
+
+  const $button = document.getElementById('simplepicker-btn');
+  const $eventLog = document.getElementById('event-log');
+
+  $button.addEventListener('click', (e) => {
+    simplepicker.open();
+  });
+
+  // $eventLog.innerHTML += '\n\n';
+  simplepicker.on('submit', (date, readableDate) => {
+    $eventLog.value += readableDate + '\n';
+    document.getElementById("video-logo").style.display = "none";
+    document.getElementById("360-box").src = imageArray[0];
+    document.getElementById("up").style.display = "inline-block";
+    document.getElementById("down").style.display = "inline-block";
+  });
+
+  simplepicker.on('close', (date) => {
+    $eventLog.innerHTML += 'Picker Closed'  + '\n';
+  });
+</script>
 <script>
     var imageArray = ["https://momento360.com/e/u/61222faf029e48638cbae0eeb90ad8dc?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium",
                       "https://momento360.com/e/u/0608d35ca078418391af013abf091903?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium",
@@ -136,13 +150,14 @@
                       "https://momento360.com/e/u/52df17c5ceb74370a138ba74c4cf3895?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium",
                       "https://momento360.com/e/u/c244abe35d554ec08cd0f1c0c8830276?utm_campaign=embed&utm_source=other&heading=-5.68&pitch=-36.43&field-of-view=100&size=medium"
                       ]
+    var aiImage = "https://momento360.com/e/u/09d4ce8d268447d3917e92d77590231e?utm_campaign=embed&utm_source=other&heading=-75.4&pitch=-22.77&field-of-view=85&size=medium";
+    var lidarImage = "https://momento360.com/e/u/b330032464fb41f29c74bfaee1f76f47?utm_campaign=embed&utm_source=other&heading=-701.41&pitch=-20.12&field-of-view=100&size=medium"
     var count = 0;
     function move(direction){
         count = direction === "UP"? count+1:count-1;
         document.getElementById("360-box").src = imageArray[count];
         loadCanvasStart();
         erase();
-
     }
 </script>
 
@@ -273,5 +288,15 @@
     }
     function loadCanvasStart(){
         document.getElementById("drawing-canvas-id").style.visibility = "hidden"
+    }
+    function activateAi(){
+        document.getElementById("360-box").src = aiImage;
+        loadCanvasStart();
+        erase();
+    }
+    function activateLidar(){
+        document.getElementById("360-box").src = lidarImage
+        loadCanvasStart();
+        erase();
     }
     </script>
